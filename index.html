@@ -240,14 +240,14 @@
 					============================================= -->
 					<div class="postcontent nobottommargin">
 						<br>
-						<h2>TRS 굿컨설팅 그룹 컨설팅상담요청</h3>
+						<h3>TRS 굿컨설팅 그룹 컨설팅상담요청</h3>
 						<p>모든 상담은 비공개를 원칙으로 합니다. 원하는 항목을 선택하여, 자문 및 포트폴리오를 받아보세요.</p>
 
 						<div class="contact-widget">
 
 							<div class="contact-form-result"></div>
 
-							<form class="nobottommargin" id="template-contactform" name="template-contactform" action="include/sendemail.php" method="post">
+							<form class="nobottommargin" id="template-contactform" name="template-contactform">
 
 								<div class="form-process"></div>
 
@@ -368,5 +368,33 @@
 	============================================= -->
 	<script type="text/javascript" src="js/functions.js"></script>
 
+	<!-- send mail scripts
+	============================================= -->
+	<script>
+        $(document).ready(function() {
+            $("#template-contactform-submit").click(function () {
+
+                $.ajax({
+                    type: 'post',
+                    url: 'https://api.mailgun.net/v3/mailgun.javabrain.kr',
+                    username: 'api',
+                    password: 'key-37c6538ec63aff9201becc573f07cd8f',
+                    data:{
+                        'html': 'template',
+                        'subject': 'TRS 굿컨설팅 그룹 컨설팅상담요청',
+                        'from': 'leesott@naver.com',
+                        'to': 'eastflag@gmail.com'
+                    },
+                    error: function (xhr, status, error) {
+                        console.log(error);
+                    },
+                    success: function (json) {
+                        console.log(json);
+						alert('메일을 전송하였습니다.');
+                    }
+                });
+            });
+        });
+	</script>
 </body>
 </html>
