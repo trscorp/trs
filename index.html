@@ -67,7 +67,7 @@
 						<!-- Top Search
 						============================================= -->
 						<div id="top-search">
-							<i class="icon-headphones"></i> 02)000-0000
+							<i class="icon-headphones"></i> 연창수 010-9266-5226
 						</div><!-- #top-search end -->
 
 					</nav><!-- #primary-menu end -->
@@ -247,18 +247,18 @@
 
 							<div class="contact-form-result"></div>
 
-							<form class="nobottommargin" id="template-contactform" name="template-contactform">
+							<form class="nobottommargin" id="template-contactform" name="template-contactform" onsubmit="sendmail()">
 
 								<div class="form-process"></div>
 
 								<div class="col_one_third">
 									<label for="template-contactform-name">이름 <small>*</small></label>
-									<input type="text" id="template-contactform-name" name="template-contactform-name" value="" class="sm-form-control required" />
+									<input type="text" id="template-contactform-name" name="template-contactform-name" value="" class="sm-form-control required" required />
 								</div>
 
 								<div class="col_one_third">
 									<label for="template-contactform-email">이메일 <small>*</small></label>
-									<input type="email" id="template-contactform-email" name="template-contactform-email" value="" class="required email sm-form-control" />
+									<input type="email" id="template-contactform-email" name="template-contactform-email" value="" class="required email sm-form-control" required />
 								</div>
 
 								<div class="col_one_third col_last">
@@ -270,7 +270,7 @@
 
 								<div class="col_two_third">
 									<label for="template-contactform-subject">회사명/직책 <small>*</small></label>
-									<input type="text" id="template-contactform-subject" name="template-contactform-subject" value="" class="required sm-form-control" />
+									<input type="text" id="template-contactform-subject" name="template-contactform-subject" value="" class="required sm-form-control" required />
 								</div>
 
 								<div class="col_one_third col_last">
@@ -294,7 +294,7 @@
 
 								<div class="col_full">
 									<label for="template-contactform-message">문의사항 <small>*</small></label>
-									<textarea class="required sm-form-control" id="template-contactform-message" name="template-contactform-message" rows="6" cols="30"></textarea>
+									<textarea class="required sm-form-control" id="template-contactform-message" name="template-contactform-message" rows="6" cols="30" required></textarea>
 								</div>
 
 								<div class="col_full hidden">
@@ -344,7 +344,7 @@
 
 						<div class="clear"></div>
 
-						<i class="icon-envelope2"></i> info@test.com <span class="middot">&middot;</span> <i class="icon-headphones"></i> 02) 000-0000
+						<i class="icon-envelope2"></i> info@test.com <span class="middot">&middot;</span> <i class="icon-headphones"></i> 연창수 010-9266-5226
 					</div>
 
 				</div>
@@ -371,30 +371,34 @@
 	<!-- send mail scripts
 	============================================= -->
 	<script>
-        $(document).ready(function() {
-            $("#template-contactform-submit").click(function () {
+        function sendmail() {
+            if (!document.getElementById('template-contactform-name').checkValidity() ||
+                !document.getElementById('template-contactform-email').checkValidity() ||
+                !document.getElementById('template-contactform-subject').checkValidity() ||
+                !document.getElementById('template-contactform-message').checkValidity()) {
+                return;
+            }
 
-                $.ajax({
-                    type: 'post',
-                    url: 'https://api.mailgun.net/v3/mailgun.javabrain.kr',
-                    username: 'api',
-                    password: 'key-37c6538ec63aff9201becc573f07cd8f',
-                    data:{
-                        'html': 'template',
-                        'subject': 'TRS 굿컨설팅 그룹 컨설팅상담요청',
-                        'from': 'leesott@naver.com',
-                        'to': 'eastflag@gmail.com'
-                    },
-                    error: function (xhr, status, error) {
-                        console.log(error);
-                    },
-                    success: function (json) {
-                        console.log(json);
-						alert('메일을 전송하였습니다.');
-                    }
-                });
+            $.ajax({
+                type: 'post',
+                url: 'https://api.mailgun.net/v3/mailgun.javabrain.kr',
+                username: 'api',
+                password: 'key-37c6538ec63aff9201becc573f07cd8f',
+                data:{
+                    'html': 'template',
+                    'subject': 'TRS 굿컨설팅 그룹 컨설팅상담요청',
+                    'from': 'leesott@naver.com',
+                    'to': 'eastflag@gmail.com'
+                },
+                error: function (xhr, status, error) {
+                    console.log(error);
+                },
+                success: function (json) {
+                    console.log(json);
+                    alert('메일을 전송하였습니다.');
+                }
             });
-        });
+        }
 	</script>
 </body>
 </html>
