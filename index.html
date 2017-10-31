@@ -381,14 +381,18 @@
 
             $.ajax({
                 type: 'post',
-                url: 'https://api.mailgun.net/v3/mailgun.javabrain.kr',
-                username: 'api',
-                password: 'key-37c6538ec63aff9201becc573f07cd8f',
+                url: 'http://www.javabrain.kr:8080/api/sendMail',
                 data:{
-                    'html': 'template',
+                    'to': 'eastflag@gmail.com',
+                    'text': '<p>보낸사람: ' + $('#template-contactform-name').val() + ' ' +  $('#template-contactform-email').val() + '</p>' +
+						'<p>전화번호: ' + $('#template-contactform-phone').val() + '</p>' +
+						'<p>회사명/직책: ' + $('#template-contactform-subject').val() + '</p>' +
+						'<p>상담분야: '  + $('#template-contactform-service').val() + '</p>' +
+						'<hr>' +
+						'<p>' + $('#template-contactform-message').val() + '</p>',
                     'subject': 'TRS 굿컨설팅 그룹 컨설팅상담요청',
-                    'from': 'leesott@naver.com',
-                    'to': 'eastflag@gmail.com'
+                    'from': $('#template-contactform-email').val(),
+					'name': $('#template-contactform-name').val(),
                 },
                 error: function (xhr, status, error) {
                     console.log(error);
